@@ -1,7 +1,7 @@
 import axios from "axios";
 
 const api = axios.create({
-  baseURL: "https://dev.api.bodypath.com.br/"
+  baseURL: "http://192.168.0.103:8000/"
 })
 
 export default api;
