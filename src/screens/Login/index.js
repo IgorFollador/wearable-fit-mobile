@@ -11,13 +11,6 @@ const Login = () => {
   const navigation = useNavigation();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
-  useEffect(() => {
-    async function cleanCache() {
-      await setStorageData("TOKEN", "");
-    }
-    cleanCache();
-  }, [])
   
   const writeTokenToStorage = async (token, name) => {
     await setStorageData("TOKEN", token);
@@ -31,13 +24,15 @@ const Login = () => {
       password: password,
     }
     await api.post("authenticate", body).then(response => {
-      api.defaults.headers.common["authorization"] = `Bearer ${response.data.token}`;
-      writeTokenToStorage(response.data.token, response.data.userName, response.data.isProfessional);
+      if (response.status == 200) {
+        api.defaults.headers.common["authorization"] = `Bearer ${response.data.token}`;
+        writeTokenToStorage(response.data.token, response.data.userName, response.data.isProfessional);
+        navigation.navigate("Dashboard");
+      }
     }).catch(error => {
-      console.error("Error Message: ", error.response.data.message);
+      console.error(`Error ${error.response.status}:`, error.response.data.message);
     });
 
-    navigation.navigate("Dashboard");
     
     return;
   };

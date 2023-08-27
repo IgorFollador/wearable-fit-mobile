@@ -6,14 +6,16 @@ import Dashboard from "../screens/Dashboard";
 
 const Stack = createStackNavigator();
 
-const Routes = () => {
+const Routes = ({isAuthenticated}) => {
+  const initialRoute = isAuthenticated ? 'Dashboard' : 'Login';
+
   return <>
     <NavigationContainer>
       <Stack.Navigator
         screenOptions={{
           headerShown: false,
         }}
-        initialRouteName={"Login"}
+        initialRouteName={initialRoute}
       >
         <Stack.Screen name="Login" component={Login} />
         <Stack.Screen name="Dashboard" component={Dashboard} />

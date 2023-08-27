@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React, {useEffect, useState} from 'react';
 import {Image, Text, TouchableOpacity, View} from 'react-native';
 import style from './style';
 
@@ -8,6 +8,7 @@ import { getStorageData, setStorageData } from '../../services/storage';
 
 const Dashboard = () => {
   const navigation = useNavigation();
+  const [userData, setUserData] = useState([]);
 
   const handleExit = async () => {
     await setStorageData("TOKEN", "");
@@ -15,21 +16,30 @@ const Dashboard = () => {
     navigation.navigate("Login"); 
   };
 
-  const userName = async () => {
-    return await getStorageData('USER_NAME');
-  }
+  useEffect(() => {
+    const getData = async () => {
+      const userName = await getStorageData('USER_NAME');
+
+      setUserData({
+        userName: userName
+      });
+    }
+    getData().catch((error) => {console.log(error)});
+  }, [])
 
   return (
-    <View style={style.container}>
-        <Image
-            source={require('../../assets/logo.png')}
-            style={style.logo}
-        />
-        <Text style={style.title}>Bem vindo {userName}</Text>
-        <TouchableOpacity onPress={handleExit}>
-            <Text style={style.buttonText}>Sair</Text>
-        </TouchableOpacity>
-    </View>
+    <>
+      <View style={style.container}>
+          <Image
+              source={require('../../assets/logo.png')}
+              style={style.logo}
+          />
+          <Text style={style.title}>Bem vindo {userData.userName}</Text>
+          <TouchableOpacity onPress={handleExit}>
+              <Text style={style.buttonText}>Sair</Text>
+          </TouchableOpacity>
+      </View>
+    </>
   );
 };
 
