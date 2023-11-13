@@ -12,7 +12,7 @@ const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   
-  const writeTokenToStorage = async (token, name) => {
+  const writeUserDataToStorage = async (token, name) => {
     await setStorageData("TOKEN", token);
     await setStorageData("USER_NAME", name);
     await setStorageData("PROFESSIONAL", name);
@@ -23,22 +23,21 @@ const Login = () => {
       email: email,
       password: password,
     }
-    await api.post("authenticate", body).then(response => {
+
+    await api.post("auth", body).then(response => {
       if (response.status == 200) {
         api.defaults.headers.common["authorization"] = `Bearer ${response.data.token}`;
-        writeTokenToStorage(response.data.token, response.data.userName, response.data.isProfessional);
+        writeUserDataToStorage(response.data.token, response.data.userName, response.data.isProfessional);
         navigation.navigate("Dashboard");
       }
     }).catch(error => {
       console.error(`Error ${error.response.status}:`, error.response.data.message);
     });
 
-    
     return;
   };
 
-  const handleRegister = () => {
-    // Lógica de registro aqui
+  const navigateToRegister = () => {
     navigation.navigate("Register"); 
   };
 
@@ -54,6 +53,7 @@ const Login = () => {
         style={style.input}
         placeholder="E-mail"
         onChangeText={text => setEmail(text)}
+        autoCapitalize='none'
         value={email}
       />
       <TextInput
@@ -62,13 +62,14 @@ const Login = () => {
         style={style.input}
         placeholder="Password"
         onChangeText={text => setPassword(text)}
+        autoCapitalize='none'
         value={password}
         secureTextEntry
       />
       <TouchableOpacity style={style.button} onPress={handleLogin}>
         <Text style={style.buttonText}>Login</Text>
       </TouchableOpacity>
-      <TouchableOpacity onPress={handleRegister}>
+      <TouchableOpacity onPress={navigateToRegister}>
         <Text style={style.registerText}>Não tem uma conta? Registre-se aqui.</Text>
       </TouchableOpacity>
     </View>

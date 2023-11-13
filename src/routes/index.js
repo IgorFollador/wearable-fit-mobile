@@ -3,6 +3,7 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createStackNavigator } from "@react-navigation/stack";
 import Login from "../screens/Login";
 import Dashboard from "../screens/Dashboard";
+import Register from "../screens/Register";
 
 const Stack = createStackNavigator();
 
@@ -18,6 +19,7 @@ const Routes = ({isAuthenticated}) => {
         initialRouteName={initialRoute}
       >
         <Stack.Screen name="Login" component={Login} />
+        <Stack.Screen name="Register" component={Register} />
         <Stack.Screen name="Dashboard" component={Dashboard} />
       </Stack.Navigator>
     </NavigationContainer>

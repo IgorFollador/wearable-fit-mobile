@@ -27,6 +27,9 @@ const style = StyleSheet.create({
     borderColor: theme.color_black,
     borderRadius: 24,
   },
+  selectInput: {
+    backgroundColor: theme.color_brand_dark,
+  },
   button: {
     width: '80%',
     backgroundColor: theme.color_primary0,
@@ -34,13 +37,29 @@ const style = StyleSheet.create({
     height: 48,
     justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 24
   },
   buttonText: {
     color: theme.color_white,
     fontSize: 25,
     fontFamily: 'Inter-Bold',
   },
-  registerText: {
+  selectInput: {
+    width: '80%',
+    backgroundColor: theme.color_white,
+    marginBottom: 15,
+    paddingLeft: 15,
+    fontSize: 18,
+    height: 50,
+    borderWidth: 1,
+    borderColor: theme.color_black,
+    borderRadius: 10,
+  },
+  selectInputText: {
+    width: '80%',
+    backgroundColor: theme.color_primary0,
+  },
+  loginText: {
     fontSize: 14,
     marginTop: 10,
     color: theme.color_black,
